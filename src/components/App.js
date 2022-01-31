@@ -189,14 +189,14 @@ function App() {
   useEffect(async () => {
     const validation = await auth.checkToken();
     if (validation) {
+      await getCards();
+      await getUserInfo();
       setLoggedUser(validation.data.email);
       setIsUserLogged(true);
-      getCards();
-      getUserInfo();
     } else {
       if (window.location.pathname === ("/" || null)) navigate("/login");
     }
-  }, [validation]);
+  }, [isUserLogged]);
 
   return (
     <div className='page'>
