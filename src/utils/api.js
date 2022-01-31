@@ -103,7 +103,7 @@ class Api {
   updateToken;
 }
 const options = {
-  baseUrl: "https://api.avilentchuk.students.nomoreparties.sbs/",
+  baseUrl: "https://api.avilentchuk2.students.nomoreparties.sbs",
   token: `Bearer ${localStorage.getItem("jwt")}`,
   groupId: "group-12",
 };
