@@ -15,4 +15,10 @@ node_modules
 .vscode
 .env
 
-/build
+src/
+public/
+babel.config
+packge
+package-lock
+postcss.config
+webpack.config
