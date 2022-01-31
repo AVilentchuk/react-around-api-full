@@ -1,6 +1,6 @@
 import Card from "./Card";
 import profilePhoto from "../assets/images/avatar_photo.png";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 const Main = ({
