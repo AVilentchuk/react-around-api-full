@@ -196,7 +196,7 @@ function App() {
     } else {
       if (window.location.pathname === ("/" || null)) navigate("/login");
     }
-  }, []);
+  }, [validation]);
 
   return (
     <div className='page'>
