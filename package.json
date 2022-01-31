@@ -1,6 +1,6 @@
 {
   "name": "around-react-auth",
-  "homepage": "https://AVilentchuk.github.io/around-react-auth/",
+  "homepage": ".",
   "version": "0.1.0",
   "dependencies": {
     "@babel/runtime": "^7.16.7",

@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "development", //development /development
+  mode: "production", //development /development
   devtool: "inline-source-map",
   entry: {
     main: path.resolve(__dirname, "src/pages/index.js"),
@@ -18,7 +18,7 @@ module.exports = {
   },
   target: ["web", "es5"],
   stats: { children: true },
-  mode: "development",
+  mode: "production",
   devServer: {
     static: path.resolve(__dirname, "dist/"),
     compress: true,
