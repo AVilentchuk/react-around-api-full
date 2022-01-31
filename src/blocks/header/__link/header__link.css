@@ -1,0 +1,17 @@
+.header__link {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: clamp(14px, 1.4vw, 18px);
+  line-height: 22px;
+  color: #fff;
+}
+
+.header__mobile-container .header__link {
+  font-size: 18px;
+}
+
+.header__link:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}

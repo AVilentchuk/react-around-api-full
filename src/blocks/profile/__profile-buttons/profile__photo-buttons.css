@@ -1,0 +1,16 @@
+.profile__photo-buttons {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity ease-in-out 0.3s;
+}
+:hover {
+  opacity: 1;
+}

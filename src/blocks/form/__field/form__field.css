@@ -1,0 +1,7 @@
+.form_field {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: clamp(238px, 28vw, 358px);
+}

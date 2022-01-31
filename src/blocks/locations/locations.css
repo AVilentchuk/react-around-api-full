@@ -1,0 +1,20 @@
+.locations {
+  margin: 0 auto clamp(50px, 5.3%, 67px);
+  padding: 0;
+  width: clamp(282px, 100%, 880px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 20px 17px;
+  transition: all 0.5s ease-in-out;
+}
+@media screen and (max-width: 889px) {
+  .locations {
+    grid-template-columns: repeat(2, 282px);
+  }
+}
+@media screen and (max-width: 676px) {
+  .locations {
+    grid-template-columns: 282px;
+  }
+}

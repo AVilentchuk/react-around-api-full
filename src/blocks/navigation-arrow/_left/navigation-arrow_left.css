@@ -1,0 +1,16 @@
+.navigation-arrow_left {
+  position: absolute;
+  top: calc(50% - 100px);
+  left: clamp(-100px, -5.6vw, -18px);
+  width: 0px;
+  height: 0px;
+  border-top: 100px solid transparent;
+  border-bottom: 100px solid transparent;
+  border-left: 0px;
+  border-right: min(3.7vw, 40px) solid white;
+  transition: opacity 0.2s ease-in-out, border-right-width 0.2s ease-in-out;
+}
+
+.navigation-arrow_left:hover {
+  opacity: 0.8;
+}

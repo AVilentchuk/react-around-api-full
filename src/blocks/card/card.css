@@ -1,0 +1,25 @@
+.card {
+  box-sizing: border-box;
+  border: white solid 0.5px;
+  position: relative;
+  width: 282px;
+  padding: 0;
+  margin: 0;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.card > .button_type_delete {
+  background: transparent url("../../assets/icons/Trash.svg") center no-repeat;
+  position: absolute;
+  border: 0;
+  width: 20px;
+  height: 20px;
+  right: 15px;
+  top: 18px;
+  transition: opacity 0.2s linear;
+}
+.button_type_delete:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
