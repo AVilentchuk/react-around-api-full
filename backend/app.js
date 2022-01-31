@@ -7,17 +7,18 @@ const auth = require('./middleware/auth');
 const requestStamp = require('./middleware/requestStamp');
 const { reqLogger: log } = require('./scripts/logging');
 const { login, createUser } = require('./controllers/users');
+const helmet = requite('helmet');
 const cors = require('cors');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
-
+app.use(helmet());
+app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(log);
-app.use(cors());
-app.options('*', cors());
 
 mongoose.connect('mongodb://localhost:27017/mydb');
 

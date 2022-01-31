@@ -1,4 +1,4 @@
-export const BASE_URL = "https://register.nomoreparties.co";
+export const BASE_URL = "https://api.avilentchuk.students.nomoreparties.sbs";
 const checkResponse = (response) => {
   if (response.ok) return response.json();
   return Promise.reject(response);

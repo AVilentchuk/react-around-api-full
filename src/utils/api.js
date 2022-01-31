@@ -1,5 +1,6 @@
 const customFetch = (url, properties) =>
   fetch(url, properties).then((response) => {
+    console.log(response);
     if (response.ok) return response.json();
     return Promise.reject(
       `Failed with status:( ${response.status} ${response.statusText} )`
@@ -7,26 +8,26 @@ const customFetch = (url, properties) =>
   });
 
 class Api {
-  constructor({ groupId, apiKey, baseUrl }) {
+  constructor({ groupId, token, baseUrl }) {
     this.groupId = groupId;
-    this.apiKey = apiKey;
+    this.token = token;
     this.baseUrl = baseUrl;
   }
 
   getInitialCards() {
-    return customFetch(`${this.baseUrl}${this.groupId}/cards`, {
+    return customFetch(`${this.baseUrl}/cards`, {
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
         "Content-Type": "application/json",
       },
     });
   }
 
   postNewCard(cardData) {
-    return customFetch(`${this.baseUrl}${this.groupId}/cards/`, {
+    return customFetch(`${this.baseUrl}/cards/`, {
       method: "POST",
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -37,43 +38,43 @@ class Api {
   }
 
   deleteCardPost(cardId) {
-    return customFetch(`${this.baseUrl}${this.groupId}/cards/${cardId}`, {
+    return customFetch(`${this.baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
       },
     });
   }
 
   getProfile() {
-    return customFetch(`${this.baseUrl}${this.groupId}/users/me`, {
+    return customFetch(`${this.baseUrl}/users/me`, {
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
       },
     });
   }
 
   updateProfile({ name, about }) {
-    return customFetch(`${this.baseUrl}${this.groupId}/users/me`, {
+    return customFetch(`${this.baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: `${name}`,
         about: `${about}`,
-        _id: `${this.apiKey}`,
-        cohort: `${this.groupId}`,
+        _id: `${this.token}`,
+        cohort: ``,
       }),
     });
   }
 
   updateProfilePhoto(avatarLink) {
-    return customFetch(`${this.baseUrl}${this.groupId}/users/me/avatar`, {
+    return customFetch(`${this.baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -83,26 +84,27 @@ class Api {
   }
 
   likePhoto(cardId) {
-    return customFetch(`${this.baseUrl}${this.groupId}/cards/likes/${cardId}`, {
+    return customFetch(`${this.baseUrl}/cards/${cardId}/likes/`, {
       method: "PUT",
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
       },
     });
   }
 
   dislikePhoto(cardId) {
-    return customFetch(`${this.baseUrl}${this.groupId}/cards/likes/${cardId}`, {
+    return customFetch(`${this.baseUrl}/cards/${cardId}/likes/`, {
       method: "Delete",
       headers: {
-        authorization: `${this.apiKey}`,
+        authorization: `${this.token}`,
       },
     });
   }
+  updateToken;
 }
 const options = {
-  baseUrl: "https://around.nomoreparties.co/v1/",
-  apiKey: "69483cc0-2fd4-4d47-b549-ff7c13f67c88",
+  baseUrl: "https://api.avilentchuk.students.nomoreparties.sbs/",
+  token: `Bearer ${localStorage.getItem("jwt")}`,
   groupId: "group-12",
 };
 
