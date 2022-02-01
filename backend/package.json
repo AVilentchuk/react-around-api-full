@@ -29,6 +29,7 @@
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "bunyan": "^1.8.15",
+    "celebrate": "^15.0.1",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^14.3.2",

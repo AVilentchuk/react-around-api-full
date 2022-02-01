@@ -7,14 +7,22 @@ const auth = require('./middleware/auth');
 const requestStamp = require('./middleware/requestStamp');
 const { reqLogger: log } = require('./scripts/logging');
 const { login, createUser } = require('./controllers/users');
-const helmet = requite('helmet');
+const helmet = require('helmet');
 const cors = require('cors');
+const errorHandler = require('./scripts/errorHandler');
+const errors = require('./constants/errors');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
+    credentials: true,
+  })
+);
 app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +36,7 @@ app.post('/signin', requestStamp, login);
 app.post('/signup', requestStamp, createUser);
 
 app.get('*', requestStamp, (req, res) => {
-  res.status(404).send({ message: 'Page not found' });
+  errorHandler(req, res, errors.pageNotFound);
 });
 
 app.listen(PORT, () => {
