@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(log);
 
-mongoose.connect('mongodb://localhost:27017/mydb');
+mongoose.connect('mongodb://127.0.0.1:27017/mydb');
 
 app.use('/cards', requestStamp, auth, cards);
 app.use('/users', requestStamp, auth, users);
