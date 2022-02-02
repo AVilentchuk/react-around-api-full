@@ -93,7 +93,6 @@ module.exports.login = (req, res) => {
     //     res.send({ message: 'correct' });
     //   })
     .then((user) => {
-      console.log(NODE_ENV === 'production' ? JWT_KEY : 'dev-secret');
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_KEY : 'dev-secret',
