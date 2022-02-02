@@ -204,9 +204,10 @@ function App() {
     const validation = await auth.checkToken();
 
     if (validation) {
-      await setIsUserLogged(true);
-      await setLoggedUser(validation.data.email);
+       setIsUserLogged(true);
+       setLoggedUser(validation.data.email);
     }
+    else {}
   }, []);
   // useEffect(() => {
   //   initilize();

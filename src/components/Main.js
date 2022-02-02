@@ -30,8 +30,8 @@ const Main = ({
     );
   };
 
-  useEffect(async () => {
-    await initilizeMain();
+  useEffect(() => {
+    initilizeMain();
   }, []);
 
   return (
