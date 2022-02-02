@@ -32,7 +32,7 @@ const Login = ({
       setStatus(false);
     } catch (failure) {
       console.log(failure);
-      next(failure);
+      return failure
     }
   };
 
