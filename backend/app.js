@@ -37,8 +37,8 @@ mongoose.connect('mongodb://localhost:27017/mydb');
 // app.use(errors());
 app.use('/cards', requestStamp, auth, cards);
 app.use('/users', requestStamp, auth, users);
-app.post('/signin', sign, requestStamp, login);
-app.post('/signup', sign, requestStamp, createUser);
+app.post('/signin' , requestStamp, login);
+app.post('/signup', requestStamp, createUser);
 
 app.get('*', requestStamp, (req, res) => {
   errorHandler(req, res, pageNotFound);
