@@ -20,7 +20,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.options('*', cors());
-app.use(errors());
+// app.use(errors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,11 +37,11 @@ mongoose.connect('mongodb://localhost:27017/mydb');
 // app.use(errors());
 app.use('/cards', requestStamp, auth, cards);
 app.use('/users', requestStamp, auth, users);
-app.post('/signin' , requestStamp, login);
+app.post('/signin', requestStamp, login);
 app.post('/signup', requestStamp, createUser);
 
 app.get('*', requestStamp, (req, res) => {
-  errorHandler(req, res, pageNotFound);
+  return Promise.reject(pageNotFound);
 });
 
 app.listen(PORT, () => {
