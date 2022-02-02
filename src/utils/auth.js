@@ -1,6 +1,5 @@
-// export const BASE_URL = "http://api.avilentchuk2.students.nomoreparties.sbs";
-import api from "./api";
-export const BASE_URL = "http://127.0.0.1:3001";
+export const BASE_URL = "http://api.avilentchuk2.students.nomoreparties.sbs";
+// export const BASE_URL = "http://127.0.0.1:3001";
 const checkResponse = (response) => {
   if (response.ok) return response.json();
   return Promise.reject(response);

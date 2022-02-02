@@ -14,7 +14,7 @@ const { login, createUser } = require('./controllers/users');
 const errorHandler = require('./scripts/errorHandler');
 const { pageNotFound } = require('./constants/errors');
 
-const { PORT = 3001 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const app = express();
 app.use(helmet());
