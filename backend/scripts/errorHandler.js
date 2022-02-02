@@ -16,16 +16,17 @@ const errorTypeCheck = (error) => {
 };
 
 module.exports = (req, res, err) => {
+  console.log(err);
   if (err.message && err.code) {
     errLogger.error({ error: err, request: req, response: res });
     res.status(err.code).send({
-      message: err.message
+      message: err.message,
     });
   } else {
     const newErr = errorTypeCheck(err);
     errLogger.error({ error: newErr, request: req, response: res });
     res.status(newErr.code).send({
-      message: newErr.message
+      message: newErr.message,
     });
   }
 };
