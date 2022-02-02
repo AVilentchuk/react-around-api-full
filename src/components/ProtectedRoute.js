@@ -6,8 +6,8 @@ const ProtectedRoute = ({ check, children }) =>
   !check ? <Navigate to='/login' /> : children;
 
 export default RequireAuth;
-function RequireAuth({ children, redirectTo }) {
-  let isAuthenticated = auth.checkToken();
+function RequireAuth({ children, redirectTo, check }) {
+  let isAuthenticated = check;
 
   return isAuthenticated ? children : <Navigate to={redirectTo} />;
 }
