@@ -22,6 +22,7 @@ const Login = ({
   const buttonRef = createRef();
 
   const errorHandle = (err) => {
+    console.log(err);
     return err.json().then((parsedError) => {
       setStatusMessage(parsedError.message || parsedError.error);
       setStatus(false);

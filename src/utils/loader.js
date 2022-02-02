@@ -59,10 +59,10 @@ export const loader = ({
         onSuccess();
       }, completeTimeDelay);
     })
-    .catch(() => {
+    .catch((err) => {
       targetElement.textContent = failMessage ? failMessage : `Failed`;
       setTimeout(() => {
-        onError();
+        onError(err);
       }, completeTimeDelay);
       clearInterval(intervalController);
     })
