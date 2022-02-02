@@ -17,14 +17,10 @@ const { pageNotFound } = require('./constants/errors');
 const { PORT = 3000 } = process.env;
 
 const app = express();
-app.use(
-  cors({
-    origin: '*',
-    methods: ['PUT', 'POST', 'GET', 'DELETE'],
-  })
-);
-app.options('*', cors());
 app.use(helmet());
+app.use(cors());
+app.options('*', cors());
+app.use(errors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,7 +34,7 @@ app.get('/crash-test', () => {
 
 mongoose.connect('mongodb://localhost:27017/mydb');
 
-app.use(errors());
+// app.use(errors());
 app.use('/cards', requestStamp, auth, cards);
 app.use('/users', requestStamp, auth, users);
 app.post('/signin', sign, requestStamp, login);

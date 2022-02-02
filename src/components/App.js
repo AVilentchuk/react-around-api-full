@@ -194,7 +194,7 @@ function App() {
   };
   const checkLoggedIn = async () => {
     if (isUserLogged) {
-      await initilize();
+      initilize();
       navigate("/");
     }
   };
@@ -202,12 +202,17 @@ function App() {
   //initialization
   useEffect(async () => {
     const validation = await auth.checkToken();
+    try {
+      if (validation) {
+        setIsUserLogged(true);
+        setLoggedUser(validation.data.email);
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
 
-    if (validation) {
-       setIsUserLogged(true);
-       setLoggedUser(validation.data.email);
     }
-    else {}
   }, []);
   // useEffect(() => {
   //   initilize();
