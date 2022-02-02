@@ -50,19 +50,19 @@ export const loader = ({
   let intervalController = setInterval(loop, interval);
 
   clickHandler()
-    .then(() => {
+    .then((res) => {
       clearInterval(intervalController);
       targetElement.textContent = element
         ? successMessage
         : `${buttonStateComplete} successfully`;
       setTimeout(() => {
-        onSuccess();
+        onSuccess(res);
       }, completeTimeDelay);
     })
-    .catch(() => {
+    .catch((err) => {
       targetElement.textContent = failMessage ? failMessage : `Failed`;
       setTimeout(() => {
-        onError();
+        onError(err);
       }, completeTimeDelay);
       clearInterval(intervalController);
     })

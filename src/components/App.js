@@ -38,21 +38,26 @@ function App() {
 
   //<<START>>data fetching functions <<START>>
   const getUserInfo = async () => {
+    const callData = await api.getProfile();
     try {
-      const callData = await api.getProfile();
-      callData && setCurrentUser(callData);
+      callData && setCurrentUser(callData.data);
     } catch (error) {
       console.log(error);
     }
   };
 
   const getCards = async () => {
+    const callData = await api.getInitialCards();
     try {
-      const callData = await api.getInitialCards();
-      callData && setCardsData(callData);
+      callData && setCardsData(callData.data);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const initilize = async () => {
+    await getUserInfo();
+    await getCards();
   };
   //<<END>>data fetching functions <<END>>
   //<<START>>Card actions handles<<START>>
@@ -61,6 +66,9 @@ function App() {
       try {
         const result = await api
           .dislikePhoto(id)
+          .then((data) => {
+            return data;
+          })
           .then((newCardData) =>
             cardsData.map(
               (card) =>
@@ -94,11 +102,11 @@ function App() {
   };
 
   const handleAddCard = async (card) => {
-    return await api.postNewCard(card).then((res) =>
+    return await api.postNewCard(card).then((res) => {
       setCardsData((Cards) => {
         return [res].concat(Cards);
-      })
-    );
+      });
+    });
   };
   //<<END>>Card actions handles<<END>>
   //<<START>>Window openers & closers<<START>>
@@ -170,36 +178,39 @@ function App() {
     setIsToolTipOpen(true);
   };
 
-  const handleLogin = (data) => {
-    data && console.log(data);
+  const handleLogin = async (data) => {
     setIsUserLogged(true);
-    navigate("/");
     data && setLoggedUser(data);
+    await api.updateToken();
+    try {
+      navigate("/");
+      initilize();
+    } catch (err) {}
   };
   const handleLogout = () => {
     localStorage.clear();
     setIsUserLogged(false);
     navigate("/login");
   };
-  const checkLoggedIn = () => {
-    isUserLogged && navigate("/");
+  const checkLoggedIn = async () => {
+    if (isUserLogged) {
+      await initilize();
+      navigate("/");
+    }
   };
 
   //initialization
   useEffect(async () => {
     const validation = await auth.checkToken();
+
     if (validation) {
-      setLoggedUser(validation.data.email);
-      setIsUserLogged(true);
-    } else {
-      if (window.location.pathname === ("/" || null)) navigate("/login");
+      await setIsUserLogged(true);
+      await setLoggedUser(validation.data.email);
     }
   }, []);
-
-  useEffect(async () => {
-    getCards();
-    getUserInfo();
-  }, [isUserLogged]);
+  // useEffect(() => {
+  //   initilize();
+  // }, [isUserLogged,loggedUser]);
 
   return (
     <div className='page'>
@@ -213,36 +224,10 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Routes>
             <Route
-              path='/register'
-              element={
-                <Register
-                  loginStatus={isUserLogged}
-                  checkLoggedIn={checkLoggedIn}
-                  onClose={handleClose}
-                  isOpen={isToolTipOpen}
-                  onOpen={handleToolTipOpen}
-                  navigate={navigate}
-                />
-              }
-            />
-            <Route
-              path='/login'
-              element={
-                <Login
-                  loginStatus={isUserLogged}
-                  checkLoggedIn={checkLoggedIn}
-                  handleLogin={handleLogin}
-                  setUser={setLoggedUser}
-                  onClose={handleClose}
-                  isOpen={isToolTipOpen}
-                  onOpen={handleToolTipOpen}
-                />
-              }
-            />
-            <Route
+              exact
               path='/'
               element={
-                <ProtectedRoute check={isUserLogged}>
+                <ProtectedRoute redirectTo='/login' setup={initilize}>
                   <Main
                     onEditProfileClick={handleEditProfileClick}
                     onAddPlaceClick={handleAddPlaceClick}
@@ -253,6 +238,7 @@ function App() {
                     handleCardLike={handleCardLike}
                     onDeleteClick={handleDeleteClick}
                     cardsData={cardsData}
+                    initilizeMain={initilize}
                   />
 
                   <EditProfilePopup
@@ -297,6 +283,33 @@ function App() {
                     confirmDelete={handleDeleteCard}
                   />
                 </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/register'
+              element={
+                <Register
+                  loginStatus={isUserLogged}
+                  checkLoggedIn={checkLoggedIn}
+                  onClose={handleClose}
+                  isOpen={isToolTipOpen}
+                  onOpen={handleToolTipOpen}
+                  navigate={navigate}
+                />
+              }
+            />
+            <Route
+              path='/login'
+              element={
+                <Login
+                  loginStatus={isUserLogged}
+                  checkLoggedIn={checkLoggedIn}
+                  handleLogin={handleLogin}
+                  setUser={setLoggedUser}
+                  onClose={handleClose}
+                  isOpen={isToolTipOpen}
+                  onOpen={handleToolTipOpen}
+                />
               }
             />
           </Routes>

@@ -1,42 +1,46 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+const cors = require('cors');
 const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 const auth = require('./middleware/auth');
+const { sign } = require('./middleware/validator');
 const requestStamp = require('./middleware/requestStamp');
 const { reqLogger: log } = require('./scripts/logging');
 const { login, createUser } = require('./controllers/users');
-const helmet = require('helmet');
-const cors = require('cors');
 const errorHandler = require('./scripts/errorHandler');
-const errors = require('./constants/errors');
+const { pageNotFound } = require('./constants/errors');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
 app.use(helmet());
-app.use(
-  cors({
-    origin: '*',
-    methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
-    credentials: true,
-  })
-);
+app.use(cors());
 app.options('*', cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(log);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Server will crash now');
+  }, 0);
+});
 
-mongoose.connect('mongodb://127.0.0.1:27017/mydb');
+mongoose.connect('mongodb://localhost:27017/mydb');
 
+app.use(errors());
 app.use('/cards', requestStamp, auth, cards);
 app.use('/users', requestStamp, auth, users);
-app.post('/signin', requestStamp, login);
-app.post('/signup', requestStamp, createUser);
+app.post('/signin', sign, requestStamp, login);
+app.post('/signup', sign, requestStamp, createUser);
 
 app.get('*', requestStamp, (req, res) => {
-  errorHandler(req, res, errors.pageNotFound);
+  errorHandler(req, res, pageNotFound);
 });
 
 app.listen(PORT, () => {

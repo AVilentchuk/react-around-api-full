@@ -22,9 +22,7 @@ const Login = ({
   const buttonRef = createRef();
 
   const errorHandle = (err) => {
-    console.log(err);
     return err.json().then((parsedError) => {
-      console.log(parsedError);
       setStatusMessage(parsedError.message || parsedError.error);
       setStatus(false);
     });
@@ -121,7 +119,6 @@ const Login = ({
               value={password || ""}
               onChange={(e) => {
                 setPassword(e.target.value);
-                console.log(password);
               }}
             />
             <span className='form__input-error'></span>

@@ -100,10 +100,13 @@ class Api {
       },
     });
   }
-  updateToken;
+  updateToken() {
+    this.token = `Bearer ${localStorage.getItem("jwt")}`;
+  }
 }
 const options = {
-  baseUrl: "http://api.avilentchuk2.students.nomoreparties.sbs",
+  // baseUrl: "https://avilentchuk.students.nomoreparties.sbs/",
+  baseUrl: "http://127.0.0.1:3001",
   token: `Bearer ${localStorage.getItem("jwt")}`,
   groupId: "group-12",
 };

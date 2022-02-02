@@ -1,6 +1,6 @@
 const fs = require('fs');
 const audit = require('express-requests-logger');
-var bunyan = require('bunyan');
+const bunyan = require('bunyan');
 const path = require('path');
 
 const logDirectory = path.join(__dirname, '..', 'logs');
@@ -10,12 +10,12 @@ if (!fs.existsSync(logDirectory)) {
 }
 
 const logStream = fs.createWriteStream(path.join(logDirectory, 'logs.log'), {
-  flags: 'a',
+  flags: 'a'
 });
 
 const errorStream = fs.createWriteStream(path.join(logDirectory, 'errors.log'), {
-  flags: 'a',
- });
+  flags: 'a'
+});
 
 function customStream() {}
 customStream.prototype.write = function (data, target) {
@@ -25,12 +25,12 @@ customStream.prototype.write = function (data, target) {
 const infoLogger = bunyan.createLogger({
   name: 'around-the-world',
   level: 'info',
-  stream: logStream,
+  stream: logStream
 });
 module.exports.errLogger = bunyan.createLogger({
   name: 'around-the-world',
   level: 'error',
-  stream: errorStream,
+  stream: errorStream
 });
 
 module.exports.reqLogger = audit({
@@ -41,7 +41,7 @@ module.exports.reqLogger = audit({
     excludeHeaders: ['authorization'],
     excludeBody: ['password', 'hostname'],
     maskHeaders: ['header1'],
-    maxBodyLength: 50,
+    maxBodyLength: 50
   },
   response: {
     audit: false,
@@ -49,6 +49,6 @@ module.exports.reqLogger = audit({
     excludeHeaders: ['*'],
     excludeBody: ['*'],
     maskHeaders: ['header1'],
-    maxBodyLength: 50,
-  },
+    maxBodyLength: 50
+  }
 });

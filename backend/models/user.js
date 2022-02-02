@@ -20,12 +20,12 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 30
   },
   about: {
     type: String,
     minlength: 2,
-    maxlength: 30,
+    maxlength: 30
   },
   avatar: {
     type: String,
@@ -34,8 +34,8 @@ const userSchema = new mongoose.Schema({
         return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/.test(
           avatar
         );
-      },
-    },
+      }
+    }
   },
   email: {
     type: String,
@@ -45,15 +45,15 @@ const userSchema = new mongoose.Schema({
     validate: {
       validator(email) {
         return mailValidator(email);
-      },
-    },
+      }
+    }
   },
   password: {
     type: String,
     required: true,
     minlength: 2,
-    select: false,
-  },
+    select: false
+  }
 });
 
 userSchema.statics.findUserByCredentials = function findUserByCredentials(
@@ -81,22 +81,20 @@ userSchema.statics.encryptAndCreateUser = function encryptAndCreateUser({
   about,
   avatar,
   email,
-  password,
+  password
 }) {
-  return bcrypt.hash(password, 10).then((hash) =>
-    this.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hash,
-    })
-      .then((user) => this.findOne(user))
-      .catch((err) => {
-        if (err.code === 11000) return Promise.reject(errors.usedEmail);
-        return Promise.reject(err);
-      })
-  );
+  return bcrypt.hash(password, 10).then((hash) => this.create({
+    name,
+    about,
+    avatar,
+    email,
+    password: hash
+  })
+    .then((user) => this.findOne(user))
+    .catch((err) => {
+      if (err.code === 11000) return Promise.reject(errors.usedEmail);
+      return Promise.reject(err);
+    }));
 };
 
 module.exports = mongoose.model('user', userSchema);

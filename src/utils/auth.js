@@ -1,4 +1,6 @@
-export const BASE_URL = "http://api.avilentchuk2.students.nomoreparties.sbs";
+// export const BASE_URL = "http://api.avilentchuk2.students.nomoreparties.sbs";
+import api from "./api";
+export const BASE_URL = "http://127.0.0.1:3001";
 const checkResponse = (response) => {
   if (response.ok) return response.json();
   return Promise.reject(response);
@@ -8,6 +10,7 @@ export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
@@ -18,6 +21,7 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
@@ -25,6 +29,7 @@ export const authorize = (email, password) => {
     .then((response) => checkResponse(response))
     .then((data) => {
       localStorage.setItem("jwt", data.token);
+
       return data;
     });
 };

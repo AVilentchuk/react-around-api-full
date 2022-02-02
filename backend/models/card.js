@@ -20,14 +20,13 @@ const cardSchema = new mongoose.Schema({
     required: true
   },
   owner: {
-    type: mongoose.ObjectId,
     ref: 'user',
+    type: mongoose.Schema.Types.ObjectId,
     require: true
   },
   likes: {
-    type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    default: []
+    type: [mongoose.Schema.Types.ObjectId]
   },
   createdAt: {
     type: Date,
@@ -35,11 +34,47 @@ const cardSchema = new mongoose.Schema({
   }
 });
 
+// const dashboardSchema = new Schema(
+//   {
+//     userId: Types.ObjectId,
+//   },
+//   {
+//     toJSON: { virtuals: true },
+//     toObject: { virtuals: true },
+//   }
+// );
+
+// cardSchema.virtual('try', {
+//   ref: 'user',
+//   localField: 'userId',
+//   foreignField: 'userId',
+//   as: 'likes',
+// });
+
+// const reportSchema = new Schema({
+//   userId: Schema.Types.ObjectId,
+//   seq: Number,
+//   date: Date
+// });
+
+// db.books.aggregate([
+//   {
+//     $lookup: {
+//       from: 'authors',
+//       localField: 'AuthorList',
+//       foreignField: '_id',
+//       as,
+//     },
+//   },
+// ]);
+
 cardSchema.statics.checkIfOwner = function checkIfOwner(cardId, requestUserId) {
   return this.findOne({ _id: `${cardId}` }).then((result) => {
     if (!result) return Promise.reject(errors.cardNotFound);
 
-    if (result.owner.valueOf() !== requestUserId) return Promise.reject(errors.notOwner);
+    if (result.owner.valueOf() !== requestUserId) {
+      return Promise.reject(errors.notOwner);
+    }
     return result;
   });
 };

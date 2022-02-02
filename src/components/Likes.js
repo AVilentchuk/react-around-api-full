@@ -4,10 +4,10 @@ import { useMousePosition } from "../hooks/useMousePosition";
 const Likes = ({ likes, target, isOver }) => {
   const likesRef = createRef();
   const position = useMousePosition();
-  const selfLike = likes.some((item) => item._id === target) ? "you " : "";
+  const [selfLike, setSelfLike] = useState("");
+  // const selfLike = likes.some((item) => item._id === target) ? "you " : "";
   const [likesUpdated, setLikesUpdated] = useState();
 
-  // console.log(position)
   useEffect(() => {
     if (isOver) {
       likesRef.current.style.top = `${
@@ -22,6 +22,7 @@ const Likes = ({ likes, target, isOver }) => {
   }, [isOver, position, likesRef]);
 
   useEffect(() => {
+    setSelfLike(likes.some((item) => item._id === target) ? "you " : "");
     setLikesUpdated(selfLike ? likes.length - 1 : likes.length);
   }, [selfLike, likes]);
 
@@ -41,20 +42,25 @@ const Likes = ({ likes, target, isOver }) => {
 
   return (
     <div ref={likesRef} className='likes'>
-      <div className='likes__container'>
-        {likes.length <= 3
-          ? likes.map((like) => renderLike(like))
-          : likes.slice(0, 3).map((like) => renderLike(like))}
-      </div>
-      {likesUpdated > 3 ? (
-        <span className='likes__info'>{`${selfLike}and ${
-          likesUpdated - 3
-        } others liked this`}</span>
+      {likes.length ? (
+        <div className='likes__container'>
+          {likes.length <= 3
+            ? likes.map((like) => renderLike(like))
+            : likes.slice(0, 3).map((like) => renderLike(like))}
+        </div>
       ) : (
-        <span className='likes__info'>{` ${
-          likesUpdated && selfLike ? "and " : ""
-        }${selfLike}liked this`}</span>
+        ""
       )}
+      {likes.length > 0 &&
+        (likesUpdated < 3 ? (
+          <span className='likes__info'>{` ${
+            likesUpdated && selfLike ? "and " : ""
+          }${selfLike}liked this`}</span>
+        ) : (
+          <span className='likes__info'>{`${selfLike}and ${
+            likesUpdated - 3
+          } others liked this`}</span>
+        ))}
     </div>
   );
 };

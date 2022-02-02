@@ -5,13 +5,13 @@ const {
   createCard,
   deleteCard,
   likeCard,
-  dislikeCard,
+  dislikeCard
 } = require('../controllers/cards');
 
 const router = express.Router();
 
-router.get('/:id', getCard);
 router.get('/', getCards);
+router.get('/:id', getCard);
 router.post('/', createCard);
 router.delete('/:id', deleteCard);
 router.put('/:id/likes', likeCard);

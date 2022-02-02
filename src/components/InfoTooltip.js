@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 
-const InfoTooltip = ({ onClose, isOpen, id, status, statusMessage }) => {
+const InfoTooltip = ({
+  onClose,
+  isOpen,
+  id,
+  status,
+  statusMessage,
+  noClose,
+}) => {
   const spinner = (
     <svg className='tooltip_spinner'>
       <circle cx='60' cy='60' r='54' />
@@ -32,12 +39,16 @@ const InfoTooltip = ({ onClose, isOpen, id, status, statusMessage }) => {
           event.stopPropagation();
         }}
       >
-        <button
-          className='button button_type_close'
-          type='button'
-          aria-label='Close window'
-          onClick={onClose}
-        ></button>
+        {noClose ? (
+          " "
+        ) : (
+          <button
+            className='button button_type_close'
+            type='button'
+            aria-label='Close window'
+            onClick={onClose}
+          ></button>
+        )}
         <div className={`tooltip ${handleTooltipImage()} `}>
           {status === null && spinner}
         </div>

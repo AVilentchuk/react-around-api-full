@@ -1,7 +1,7 @@
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const { authorizationError } = require('../constants/errors');
 const errorHandler = require('../scripts/errorHandler');
-const jwt = require('jsonwebtoken');
 
 const { JWT_KEY } = process.env;
 

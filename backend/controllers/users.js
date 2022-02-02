@@ -5,7 +5,6 @@ const User = require('../models/user');
 const errors = require('../constants/errors');
 const errorHandler = require('../scripts/errorHandler');
 
-
 const { NODE_ENV, JWT_KEY } = process.env;
 
 // <<START>> Main Functions <<START>>

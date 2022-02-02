@@ -10,7 +10,7 @@ const Card = ({ cardData, onClick, onCardLike, onCardDelete }) => {
 
   const { name, likes, link, _id: id } = cardData;
 
-  const liked = likes.some((like) => like._id === currentUser._id);
+  const liked = likes && likes.some((like) => like._id === currentUser._id);
 
   const [isTooltipShown, setIsTooltipShown] = useState(false);
 
@@ -20,7 +20,9 @@ const Card = ({ cardData, onClick, onCardLike, onCardDelete }) => {
     );
   }, [tooltip]);
 
-  const handleLikeClick = () => onCardLike(id, liked);
+  const handleLikeClick = () => {
+    onCardLike(id, liked);
+  };
 
   function handleClick() {
     return onClick(cardData);
@@ -52,7 +54,7 @@ const Card = ({ cardData, onClick, onCardLike, onCardDelete }) => {
             setIsOver(false);
           }}
         >
-          {likes.length ? (
+          {likes ? (
             <Likes
               target={currentUser._id}
               likes={likes}
