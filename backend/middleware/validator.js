@@ -1,4 +1,4 @@
-const { celebrate, Joi, errors } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
 const { invalidRequest } = require('../constants/errors');
 
 module.exports.sign = celebrate({

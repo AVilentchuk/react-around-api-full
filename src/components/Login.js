@@ -22,7 +22,6 @@ const Login = ({
   const buttonRef = createRef();
 
   const errorHandle = (err) => {
-    console.log(err);
     return err.json().then((parsedError) => {
       setStatusMessage(parsedError.message || parsedError.error);
       setStatus(false);
@@ -30,10 +29,11 @@ const Login = ({
   };
 
   const handleSubmit = (e) => {
+    onOpen();
+    setStatusMessage("Logging in");
+    setStatus(null);
     return auth.authorize(email, password).then((data) => {
       if (data.token) {
-        setEmail(" ");
-        setPassword(" ");
       }
     });
   };
@@ -66,9 +66,6 @@ const Login = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onOpen();
-            setStatusMessage("Logging in");
-            setStatus(null);
             loader({
               dots: {
                 interval: 75,
@@ -80,7 +77,11 @@ const Login = ({
               onSuccess: () => {
                 setStatusMessage("Logged in");
                 setStatus(true);
-                handleLogin(email);
+                setTimeout(() => {
+                  handleLogin(email);
+                }, 300);
+                setEmail(" ");
+                setPassword(" ");
               },
               onError: errorHandle,
               callbackEnd: () => {

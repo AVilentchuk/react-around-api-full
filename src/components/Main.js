@@ -31,6 +31,7 @@ const Main = ({
   };
 
   useEffect(() => {
+    initilizeMain()
   }, []);
 
   return (
