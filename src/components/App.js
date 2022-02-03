@@ -211,8 +211,12 @@ function App() {
       }
     } catch (error) {
       console.log(error);
+
     }
   }, []);
+  // useEffect(() => {
+  //   initilize();
+  // }, [isUserLogged,loggedUser]);
 
   return (
     <div className='page'>
@@ -229,7 +233,7 @@ function App() {
               exact
               path='/'
               element={
-                <ProtectedRoute redirectTo='/login' check={isUserLogged}>
+                <ProtectedRoute redirectTo='/login' setup={initilize}>
                   <Main
                     onEditProfileClick={handleEditProfileClick}
                     onAddPlaceClick={handleAddPlaceClick}
@@ -240,6 +244,7 @@ function App() {
                     handleCardLike={handleCardLike}
                     onDeleteClick={handleDeleteClick}
                     cardsData={cardsData}
+                    initilizeMain={initilize}
                   />
 
                   <EditProfilePopup

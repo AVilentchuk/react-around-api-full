@@ -21,19 +21,12 @@ const Login = ({
   const formRef = useRef();
   const buttonRef = createRef();
 
-  const errorHandle = (error) => {
-    try {
-      const procceseedError = JSON.parse(error);
-      if (procceseedError && typeof procceseedError === "object") {
-        setStatusMessage(procceseedError.message || procceseedError.error);
-        setStatus(false);
-      }
-      setStatusMessage(error.message || error.error);
+  const errorHandle = (err) => {
+    console.log(err);
+    return err.json().then((parsedError) => {
+      setStatusMessage(parsedError.message || parsedError.error);
       setStatus(false);
-    } catch (failure) {
-      console.log(failure);
-      return failure
-    }
+    });
   };
 
   const handleSubmit = (e) => {

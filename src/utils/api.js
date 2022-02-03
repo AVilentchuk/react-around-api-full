@@ -105,8 +105,8 @@ class Api {
   }
 }
 const options = {
-  baseUrl: "https://api.avilentchuk3.students.nomoreparties.sbs",
-  // baseUrl: "http://127.0.0.1:3000",
+  baseUrl: "https://api.avilentchuk3.students.nomoreparties.sbs/",
+
   token: `Bearer ${localStorage.getItem("jwt")}`,
   groupId: "group-12",
 };
