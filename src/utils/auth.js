@@ -1,5 +1,5 @@
 export const BASE_URL = "http://api.avilentchuk3.students.nomoreparties.sbs";
-// export const BASE_URL = "http://127.0.0.1:3000"; local
+
 const checkResponse = (response) => {
   if (response.ok) return response.json();
   return Promise.reject(response);
