@@ -14,11 +14,12 @@ node_modules
 .idea
 .vscode
 .env
+.gitignore
 
 src/
 public/
-babel.config
-packge
-package-lock
-postcss.config
-webpack.config
+babel.config.js
+packge.json
+package-lock.json
+postcss.config.js
+webpack.config.js
