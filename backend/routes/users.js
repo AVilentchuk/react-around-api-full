@@ -9,9 +9,6 @@ const {
   getSelf,
 } = require('../controllers/users');
 
-
-
-
 router.get('/', getUsers);
 router.get('/me', getSelf);
 router.get('/:id', getUser);

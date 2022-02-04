@@ -1,4 +1,4 @@
-const express = require('express');
+const router = require('express').Router();
 const { card: cardValidator } = require('../middleware/validator');
 const {
   getCard,
@@ -9,7 +9,6 @@ const {
   dislikeCard
 } = require('../controllers/cards');
 
-const router = express.Router();
 
 router.get('/', getCards);
 router.get('/:id', getCard);
