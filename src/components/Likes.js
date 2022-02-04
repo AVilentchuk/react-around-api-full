@@ -1,6 +1,6 @@
 import { createRef, useEffect, useState } from "react";
 import { useMousePosition } from "../hooks/useMousePosition";
-
+import defaultImage from "../assets/images/default_avatar.png";
 const Likes = ({ likes, target, isOver }) => {
   const likesRef = createRef();
   const position = useMousePosition();
@@ -32,10 +32,10 @@ const Likes = ({ likes, target, isOver }) => {
         <div className='likes__owner' key={like._id}>
           <img
             className='likes__owner-image'
-            src={like.avatar}
-            alt={`Profile pictue of ${like.name}`}
+            src={like.avatar ? like.avatar : defaultImage}
+            alt={like.name ? `Profile pictue of ${like.name}` : ""}
           />
-          <p className='likes__owner-name'>{like.name}</p>
+          <p className='likes__owner-name'>{like.name ? like.name : "Someone"}</p>
         </div>
       );
   };
