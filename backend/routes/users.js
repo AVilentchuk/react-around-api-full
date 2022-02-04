@@ -1,4 +1,5 @@
 const express = require('express');
+const { user: userValidator} = require('../middleware/validator');
 const {
   createUser,
   getUsers,
@@ -13,8 +14,8 @@ const router = express.Router();
 router.get('/', getUsers);
 router.get('/me', getSelf);
 router.get('/:id', getUser);
-router.post('/', createUser);
-router.patch('/me', updateProfile);
-router.patch('/me/avatar', updateAvatar);
+router.post('/',userValidator, createUser);
+router.patch('/me', userValidator, updateProfile);
+router.patch('/me/avatar',userValidator, updateAvatar);
 
 module.exports = router;

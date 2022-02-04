@@ -2,8 +2,8 @@ const ServerError = require('../components/ServerError');
 
 module.exports.validationError = new ServerError({
   message: 'Incorrect email or password',
-  name: 'LoginFailed',
-  code: 400
+  name: 'Unauthorized',
+  code: 401
 });
 
 module.exports.authorizationError = new ServerError({
