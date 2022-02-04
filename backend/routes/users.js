@@ -1,15 +1,16 @@
-const express = require('express');
-const { user: userValidator } = require('../middleware/validator');
+const router = require('express').Router();
+const { updateUser: userValidator } = require('../middleware/validator');
 const {
   createUser,
   getUsers,
   getUser,
   updateProfile,
   updateAvatar,
-  getSelf
+  getSelf,
 } = require('../controllers/users');
 
-const router = express.Router();
+
+
 
 router.get('/', getUsers);
 router.get('/me', getSelf);

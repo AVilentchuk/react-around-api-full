@@ -26,7 +26,7 @@ module.exports = (req, res, err) => {
     const newErr = errorTypeCheck(err);
     errLogger.error({ error: newErr, request: req, response: res });
     res.status(newErr.code).send({
-      message: newErr.message
+      message: newErr.message,
     });
   }
 };
