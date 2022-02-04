@@ -1,7 +1,0 @@
-.form__field_dark {
-  min-width: 260px;
-  width: clamp(260px, 28vw, 358px);
-  border-bottom: 2px #ccc solid;
-  color: white;
-  background-color: transparent;
-}

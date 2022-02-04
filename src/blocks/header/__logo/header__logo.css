@@ -1,6 +1,0 @@
-.header__logo {
-  margin: clamp(28px, 3.6vw, 46px) auto clamp(32px, 3.125vw, 40px)
-    clamp(0px, (880px - 100%), 27px);
-  width: clamp(126px, 13.5vw, 173px);
-  transition: all 0.5s ease-in-out;
-}

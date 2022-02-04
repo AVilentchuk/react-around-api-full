@@ -1,8 +1,0 @@
-.footer__about {
-  margin:0;
-  color: #545454;
-  font-style: normal;
-  font-weight: normal;
-  font-size: clamp(14px, 1.41vw, 18px);
-  line-height: clamp(17px, 1.72vw, 22px);
-}
