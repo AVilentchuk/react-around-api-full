@@ -1,5 +1,5 @@
 const express = require('express');
-const { card: cardValidator} = require('../middleware/validator');
+const { card: cardValidator } = require('../middleware/validator');
 const {
   getCard,
   getCards,
