@@ -18,6 +18,7 @@ node_modules
 
 src/
 public/
+newfolder/
 babel.config.js
 packge.json
 package-lock.json
