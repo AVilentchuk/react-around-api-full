@@ -22,7 +22,7 @@ module.exports.updateUser = celebrate({
 module.exports.card = celebrate({
   body: Joi.object()
     .keys({
-      name: Joi.string().required().min(2).max(30).error(invalidRequest)s,
+      name: Joi.string().required().min(2).max(30).error(invalidRequest),
       link: Joi.string().required().uri().error(invalidRequest),
     })
     .unknown(true),
