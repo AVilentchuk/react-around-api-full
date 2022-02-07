@@ -88,6 +88,6 @@ module.exports.login = (req, res) => {
       );
       res.send({ token });
     })
-    .catch(() => Promise.reject(errors.authorizationError));
+    .catch(() => errorHandler({ error: errors.authorizationError }));
 };
 // <<END>> Main Functions <<END>>
