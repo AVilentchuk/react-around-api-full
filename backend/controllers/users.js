@@ -79,19 +79,7 @@ module.exports.login = (req, res) => {
   const { email, password } = req.body;
 
   User.findUserByCredentials(email, password)
-    // User.findOne({ email })
-    //   .then((user) => {
-    //     if (!user) {
-    //       return Promise.reject(new Error('Incorrect password or email'));
-    //     }
-    //     return bcrypt.compare(password, user.password);
-    //   })
-    //   .then((matched) => {
-    //     if (!matched) {
-    //       return Promise.reject(new Error('Incorrect password or email'));
-    //     }
-    //     res.send({ message: 'correct' });
-    //   })
+
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
@@ -100,7 +88,7 @@ module.exports.login = (req, res) => {
       );
       res.send({ token });
     })
-    .catch((err) => errorHandler(req, res, err));
-  // .catch((err) => errorHandler(req, res, err);
+    .catch(() => Promise.reject(errors.authorizationError));
+
 };
 // <<END>> Main Functions <<END>>

@@ -71,8 +71,9 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
         if (!matched) {
           return Promise.reject(errors.validationError);
         }
-        return user;
+
       });
+      return user;
     });
 };
 
