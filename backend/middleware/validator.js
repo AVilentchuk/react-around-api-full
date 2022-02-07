@@ -1,6 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
 const errorHandler = require('../scripts/errorHandler');
-// const { invalidRequest } = require('../constants/errors');
+const { invalidRequest } = require('../constants/errors');
 
 module.exports.sign = celebrate({
   body: Joi.object()
@@ -8,7 +8,7 @@ module.exports.sign = celebrate({
       email: Joi.string().required().min(6).email(),
       password: Joi.string().required().min(2),
     })
-    .error((err) => console.log(err)),
+    .error(() => Promise.reject(invalidRequest)),
 });
 
 module.exports.updateUser = celebrate({
@@ -18,7 +18,7 @@ module.exports.updateUser = celebrate({
       about: Joi.string().min(2).max(30),
       avatar: Joi.string().uri(),
     })
-    .error((err) => Promise.reject(err))
+    .error(() => Promise.reject(invalidRequest))
     .unknown(true),
 });
 
@@ -28,6 +28,6 @@ module.exports.card = celebrate({
       name: Joi.string().required().min(2).max(30),
       link: Joi.string().required().uri(),
     })
-    .error((err) => Promise.reject(err))
+    .error(() => Promise.reject(invalidRequest))
     .unknown(true),
 });
