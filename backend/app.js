@@ -17,13 +17,9 @@ const { pageNotFound } = require('./constants/errors');
 const { PORT = 3000 } = process.env;
 
 const app = express();
-app.use(
-  cors({
-    origin: '*',
-  })
-);
-app.options('*', cors());
 app.use(helmet());
+app.use(cors());
+app.options('*', cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,7 +38,6 @@ app.use('/users', requestStamp, auth, users);
 app.post('/signin', sign, requestStamp, login);
 app.post('/signup', sign, requestStamp, createUser);
 app.use(errors());
-
 app.get('*', requestStamp, (req, res) => {
   errorHandler(req, res, pageNotFound);
 });
