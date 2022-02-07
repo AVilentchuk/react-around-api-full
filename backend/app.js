@@ -37,7 +37,7 @@ app.use('/cards', requestStamp, auth, cards);
 app.use('/users', requestStamp, auth, users);
 app.post('/signin', sign, requestStamp, login);
 app.post('/signup', sign, requestStamp, createUser);
-app.use(errors());
+// app.use(errors());
 app.get('*', requestStamp, (req, res) => {
   errorHandler(req, res, pageNotFound);
 });
