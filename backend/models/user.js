@@ -66,7 +66,6 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials(
       if (!user) {
         return Promise.reject(errors.validationError);
       }
-
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
           return Promise.reject(errors.validationError);
@@ -93,7 +92,7 @@ userSchema.statics.encryptAndCreateUser = function encryptAndCreateUser({
     .then((user) => this.findOne(user))
     .catch((err) => {
       if (err.code === 11000) return Promise.reject(errors.usedEmail);
-      return Promise.reject(err);
+      return err;
     }));
 };
 

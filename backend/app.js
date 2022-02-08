@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { errors } = require('celebrate');
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 const auth = require('./middleware/auth');
@@ -24,24 +23,39 @@ app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(log);
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Server will crash now');
   }, 0);
 });
-
+// app.on('uncaughtException', (err) => {
+//   console.error('There was an uncaught error', err);
+//   process.exit(1); //mandatory (as per the Node.js docs)
+// });
 mongoose.connect('mongodb://localhost:27017/mydb');
-
-app.use('/cards', requestStamp, auth, cards);
-app.use('/users', requestStamp, auth, users);
-app.post('/signin', sign, requestStamp, login);
-app.post('/signup', sign, requestStamp, createUser);
-// app.use(errors());
-app.get('*', requestStamp, (req, res) => {
-  errorHandler(req, res, pageNotFound);
+app.use(requestStamp);
+app.use(log);
+app.use('/cards', auth, cards);
+app.use('/users', auth, users);
+app.post('/signin', sign, login);
+app.post('/signup', sign, createUser);
+app.get('*', (req, res, next) => {
+  next(pageNotFound);
 });
 
+// app.use(methodOverride());
+// app.use(clientErrorHandler);
+// app.use((req,res,next)=>{
+//   const error = new
+// })
+// app.use(function (err, req, res, next) {
+//   // logic
+// })
+// app.use(log);
+// app.use(errorLogger);
+// app.use(errors());
+
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
 });

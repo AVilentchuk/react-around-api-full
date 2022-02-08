@@ -8,7 +8,7 @@ const errorHandler = require('../scripts/errorHandler');
 const { NODE_ENV, JWT_KEY } = process.env;
 
 // <<START>> Main Functions <<START>>
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (req, res, next) => {
   User.find({ _id: req.params.id })
     .orFail(() => {
       throw errors.userNotFound;
@@ -17,7 +17,7 @@ module.exports.getUsers = (req, res) => {
     .catch((err) => errorHandler(req, res, err));
 };
 
-module.exports.getUser = (req, res) => {
+module.exports.getUser = (req, res, next) => {
   User.findOne({ _id: req.params.id })
     .orFail(() => {
       throw errors.userNotFound;
@@ -28,7 +28,7 @@ module.exports.getUser = (req, res) => {
     .catch((err) => errorHandler(req, res, err));
 };
 
-module.exports.getSelf = (req, res) => {
+module.exports.getSelf = (req, res, next) => {
   User.findOne({ _id: req.user._id })
     .orFail(() => {
       throw errors.userNotFound;
@@ -39,13 +39,13 @@ module.exports.getSelf = (req, res) => {
     .catch((err) => errorHandler(req, res, err));
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   User.encryptAndCreateUser(req.body)
     .then((user) => res.send({ data: user }))
-    .catch((err) => errorHandler(req, res, err));
+    .catch(next);
 };
 
-module.exports.updateProfile = (req, res) => {
+module.exports.updateProfile = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name: req.body.name, about: req.body.about },
@@ -55,13 +55,10 @@ module.exports.updateProfile = (req, res) => {
       throw errors.userNotFound;
     })
     .then((user) => res.send(user))
-    .catch((err) => {
-      console.log(err);
-      errorHandler(req, res, err);
-    });
+    .catch(next);
 };
 
-module.exports.updateAvatar = (req, res) => User.findByIdAndUpdate(
+module.exports.updateAvatar = (req, res, next) => User.findByIdAndUpdate(
   req.user._id,
   { avatar: req.body.avatar },
   { new: true, runValidators: true }
@@ -70,16 +67,12 @@ module.exports.updateAvatar = (req, res) => User.findByIdAndUpdate(
     throw errors.userNotFound;
   })
   .then((user) => res.send(user))
-  .catch((err) => {
-    console.log(err);
-    errorHandler(req, res, err);
-  });
+  .catch(next);
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
 
-  User.findUserByCredentials(email, password)
-
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
@@ -88,6 +81,6 @@ module.exports.login = (req, res) => {
       );
       res.send({ token });
     })
-    .catch(() => {throw errors.authorizationError});
+    .catch(next);
 };
 // <<END>> Main Functions <<END>>

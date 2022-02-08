@@ -7,7 +7,7 @@ const { JWT_KEY } = process.env;
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(`this:${authorization}`);
+
   if (!authorization || !authorization.startsWith('Bearer ')) {
     return errorHandler(req, res, authorizationError);
   }
@@ -15,7 +15,6 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    console.log(payload);
     payload = jwt.verify(token, JWT_KEY);
   } catch (err) {
     console.log(err);

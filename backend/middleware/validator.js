@@ -1,13 +1,10 @@
 const { celebrate, Joi } = require('celebrate');
-const { validationError } = require('../constants/errors');
 
 module.exports.sign = celebrate({
-  body: Joi.object()
-    .keys({
-      email: Joi.string().required().min(6).email(),
-      password: Joi.string().required().min(2)
-    })
-    .error(() => Promise.reject(validationError))
+  body: Joi.object().keys({
+    email: Joi.string().required().min(6).email(),
+    password: Joi.string().required().min(2)
+  })
 });
 
 module.exports.updateUser = celebrate({
@@ -21,16 +18,10 @@ module.exports.updateUser = celebrate({
       avatar: Joi.string().uri(),
       _id: Joi.string().hex().length(24)
     })
-    .error(() => Promise.reject(validationError))
     .unknown(true)
 });
 
-module.exports.card = celebrate({
-  params: Joi.object({
-    id: Joi.string().hex().length(24)
-  })
-    .unknown(true)
-    .error(() => Promise.reject(validationError)),
+module.exports.createCardValidator = celebrate({
   body: Joi.object()
     .keys({
       name: Joi.string().required().min(2).max(30),
@@ -38,5 +29,15 @@ module.exports.card = celebrate({
       _id: Joi.string().hex().length(24)
     })
     .unknown(true)
-    .error(() => Promise.reject(validationError))
+});
+
+module.exports.cardActionsValidator = celebrate({
+  params: Joi.object({
+    id: Joi.string().hex().length(24).required()
+  }),
+  body: Joi.object()
+    .keys({
+      _id: Joi.string().hex().length(24)
+    })
+    .unknown(true)
 });
