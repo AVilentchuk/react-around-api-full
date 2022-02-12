@@ -1,0 +1,8 @@
+.button_type_edit-profile-image {
+  background: transparent url("../../../assets/icons/Edit_Pen.svg") center
+    no-repeat;
+  width: 26px;
+  height: 26px;
+  border: none;
+  transition: opacity ease-in-out 0.3s;
+}

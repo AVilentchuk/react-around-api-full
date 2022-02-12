@@ -1,0 +1,32 @@
+.tooltip_spinner {
+  width: 100%;
+  height: 100%;
+  x: 0px;
+  y: 0px;
+  viewbox: 0 0 120 120;
+}
+
+.tooltip_spinner circle {
+  fill: transparent;
+  stroke: #212121;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-dasharray: 376.8;
+  transform-origin: 60px 60px 0;
+  animation: 2s linear infinite spinner;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 79.2;
+  }
+  50% {
+    transform: rotate(720deg);
+    stroke-dashoffset: 376.8;
+  }
+  100% {
+    transform: rotate(1080deg);
+    stroke-dashoffset: 79.2;
+  }
+}

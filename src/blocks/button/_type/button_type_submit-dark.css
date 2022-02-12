@@ -1,0 +1,20 @@
+.button_type_submit-dark {
+  margin: clamp(143px, 14.54vw, 186px) auto clamp(15px, 337px - 100%, 17px);
+  padding: 0;
+  color: #000000;
+  width: clamp(260px, 28vw, 358px);
+  /* width: 100%; */
+  height: clamp(46px, 4vw, 50px);
+  border-radius: 2px;
+  background: #ffffff;
+  font-style: normal;
+  font-weight: normal;
+  font-family: Inter;
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: clamp(17px, 1.72vw, 22px);
+  text-align: center;
+  border: 0;
+}
+.button_type_submit-dark:hover {
+  opacity: 0.8;
+}

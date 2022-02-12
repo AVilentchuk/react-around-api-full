@@ -1,0 +1,6 @@
+.popup_active {
+  visibility: visible;
+  pointer-events: all;
+  opacity: 1;
+  transform:scale(1);
+}
